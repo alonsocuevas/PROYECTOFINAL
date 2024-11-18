@@ -66,65 +66,78 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
 
   if(switchTable === 2){
     return (
-      <table className='table is-hoverable is-fullwidth'>
-        <thead>
-          <tr>
-            <th>
-              <button onClick={() => setSwitchTable(1)} className='button is-light' >
-                Volver
-              </button>
-            </th>
-            <th>RUT</th>
-            <th>Fecha</th>
-            <th>Entró</th>
-            <th>Salió</th>
-            <th>Horas totales</th>
-          </tr>
-        </thead>
-        <tbody>
-          {attendance.filter(
-            (attendanceByRut) => attendanceByRut.usuarioRut === refRut.current)
-            .map((attendance: Attendance) => (
-          <tr key={attendance.id}>
-            <th>
-            </th>
-            {/* RUT */}
-            <th>{attendance.usuarioRut}</th>
-            {/* Fecha */}
-            <td>
-              {`
-                ${new Date(attendance.fecha).toLocaleString()}
-              `}
-            </td>
-            {/* Hora entrada */}
-            <td>
-              {`
-                ${new Date(attendance.horaEntrada).getHours().toString().padStart(2, "0")}:
-                ${new Date(attendance.horaEntrada).getMinutes().toString().padStart(2, "0")}:
-                ${new Date(attendance.horaEntrada).getSeconds().toString().padStart(2, "0")}
-              `}
-            </td>
-            {/* Hora salida */}
-            <td>
-              {`
-                ${new Date(attendance.horaSalida).getHours().toString().padStart(2, "0")}:
-                ${new Date(attendance.horaSalida).getMinutes().toString().padStart(2, "0")}:
-                ${new Date(attendance.horaSalida).getSeconds().toString().padStart(2, "0")}
-              `}
-            </td>
-            {/* Horas totales */}
-            <td>
-              {`
-                ${(
-                  (new Date(attendance.horaSalida).getTime() - 
-                  new Date(attendance.horaEntrada).getTime()) / 1000 / 60 / 60).toString().padStart(2, "0")}:
-                ${((new Date(attendance.horaSalida).getTime() - new Date(attendance.horaEntrada).getTime()) / 1000 / 60).toString().padStart(2, "0") }
-              `}
-            </td>
-          </tr>
-          ))}
-        </tbody>
-      </table>
+      <>
+        <div className="columns mt-5">
+          {/* Nombre de trabajador actual */}
+          <div className="column is-8">
+            <StrongUserDetails />
+          </div>
+          <div className="column is-flex is-justify-content-flex-end">
+            {/* Exportar a CSV */}
+            <ExportCSV dataToExport={[{}]}/>
+          </div>
+        </div>
+
+        <table className='table is-hoverable is-fullwidth'>
+          <thead>
+            <tr>
+              <th>
+                <button onClick={() => setSwitchTable(1)} className='button is-light' >
+                  Volver
+                </button>
+              </th>
+              <th>RUT</th>
+              <th>Fecha</th>
+              <th>Entró</th>
+              <th>Salió</th>
+              <th>Horas totales</th>
+            </tr>
+          </thead>
+          <tbody>
+            {attendance.filter(
+              (attendanceByRut) => attendanceByRut.usuarioRut === refRut.current)
+              .map((attendance: Attendance) => (
+            <tr key={attendance.id}>
+              <th>
+              </th>
+              {/* RUT */}
+              <th>{attendance.usuarioRut}</th>
+              {/* Fecha */}
+              <td>
+                {`
+                  ${new Date(attendance.fecha).toLocaleString()}
+                `}
+              </td>
+              {/* Hora entrada */}
+              <td>
+                {`
+                  ${new Date(attendance.horaEntrada).getHours().toString().padStart(2, "0")}:
+                  ${new Date(attendance.horaEntrada).getMinutes().toString().padStart(2, "0")}:
+                  ${new Date(attendance.horaEntrada).getSeconds().toString().padStart(2, "0")}
+                `}
+              </td>
+              {/* Hora salida */}
+              <td>
+                {`
+                  ${new Date(attendance.horaSalida).getHours().toString().padStart(2, "0")}:
+                  ${new Date(attendance.horaSalida).getMinutes().toString().padStart(2, "0")}:
+                  ${new Date(attendance.horaSalida).getSeconds().toString().padStart(2, "0")}
+                `}
+              </td>
+              {/* Horas totales */}
+              <td>
+                {`
+                  ${(
+                    (new Date(attendance.horaSalida).getTime() - 
+                    new Date(attendance.horaEntrada).getTime()) / 1000 / 60 / 60).toString().padStart(2, "0")}:
+                  ${((new Date(attendance.horaSalida).getTime() - new Date(attendance.horaEntrada).getTime()) / 1000 / 60).toString().padStart(2, "0") }
+                `}
+              </td>
+            </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
     );
   }
 }
