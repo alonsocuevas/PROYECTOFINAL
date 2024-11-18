@@ -74,7 +74,6 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             <th>Fecha</th>
             <th>Entró</th>
             <th>Salió</th>
-            <th>Atraso</th>
             <th>Horas totales</th>
           </tr>
         </thead>
@@ -112,12 +111,6 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
                 ${new Date(attendance.horaSalida).getHours().toString().padStart(2, "0")}:
                 ${new Date(attendance.horaSalida).getMinutes().toString().padStart(2, "0")}:
                 ${new Date(attendance.horaSalida).getSeconds().toString().padStart(2, "0")}
-              `}
-            </td>
-            {/* Atraso */}
-            <td>
-              {`
-                ${new Date(attendance.horaSalida)}
               `}
             </td>
             {/* Horas totales */}
