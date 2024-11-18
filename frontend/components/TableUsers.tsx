@@ -1,7 +1,8 @@
 'use client';
 import { useRef, useState } from "react";
-import { InfoIcon } from "./icons/InfoIcon";
 import { Attendance, User } from "@/app/utils/definitions";
+import StrongUserDetails from "./StrongUserDetails";
+import ExportCSV from "./ExportCSV";
 
 export default function TableUsers({ users, attendance} : {users: User[]; attendance: Attendance[]; }){
 
@@ -10,44 +11,56 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
 
   if(switchTable === 1){
     return (
-      <table className='table is-hoverable is-fullwidth'>
-        <thead>
-          <tr>
-            <th>Asistencia</th>
-            <th>RUT</th>
-            <th>Nombres</th>
-            <th>Apellidos</th>
-            <th>Correo</th>
-            <th>Área</th>
-            <th>Cargo</th>
-            <th>Turno</th>
-            <th>Empresa</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user: User) => (
-          <tr key={user.rut}>
-            <th>
-              
-              <button onClick={() => {
-                refRut.current = user.rut;
-                setSwitchTable(2);
-              }} className='button is-light' >
-                Ver
-              </button>
-            </th>
-            <th>{user.rut}</th>
-            <td>{user.nombres}</td>
-            <td>{user.apellidos}</td>
-            <td>{user.correo}</td>
-            <td>{user.area}</td>
-            <td>{user.cargo}</td>
-            <td>{user.turno}</td>
-            <td>{user.empresa}</td>
-          </tr>
-          ))}
-        </tbody>
-      </table>
+      <>
+      <div className="columns mt-5">
+        {/* Nombre de trabajador actual */}
+        <div className="column is-8">
+          <StrongUserDetails />
+        </div>
+        <div className="column is-flex is-justify-content-flex-end">
+          {/* Exportar a CSV */}
+          <ExportCSV dataToExport={[{}]}/>
+        </div>
+      </div>
+        <table className='table is-hoverable is-fullwidth'>
+          <thead>
+            <tr>
+              <th>Asistencia</th>
+              <th>RUT</th>
+              <th>Nombres</th>
+              <th>Apellidos</th>
+              <th>Correo</th>
+              <th>Área</th>
+              <th>Cargo</th>
+              <th>Turno</th>
+              <th>Empresa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user: User) => (
+            <tr key={user.rut}>
+              <th>
+                
+                <button onClick={() => {
+                  refRut.current = user.rut;
+                  setSwitchTable(2);
+                }} className='button is-light' >
+                  Ver
+                </button>
+              </th>
+              <th>{user.rut}</th>
+              <td>{user.nombres}</td>
+              <td>{user.apellidos}</td>
+              <td>{user.correo}</td>
+              <td>{user.area}</td>
+              <td>{user.cargo}</td>
+              <td>{user.turno}</td>
+              <td>{user.empresa}</td>
+            </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
     );
   }
 
@@ -59,17 +72,17 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             <th>Detalles cuenta</th>
             <th>RUT</th>
             <th>Fecha</th>
-            <th>Hora entrada</th>
-            <th>Hora salida</th>
+            <th>Entró</th>
+            <th>Salió</th>
             <th>Atraso</th>
             <th>Horas totales</th>
           </tr>
         </thead>
         <tbody>
           
-          {(attendance.filter(
+          {attendance.filter(
             (attendanceByRut) => attendanceByRut.usuarioRut === refRut.current)
-            ).map((attendance: Attendance) => (
+            .map((attendance: Attendance) => (
           <tr key={attendance.id}>
             <th>
               
@@ -82,32 +95,39 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             {/* Fecha */}
             <td>
               {`
-                ${attendance.fecha.toLocaleDateString()}
+                ${new Date(attendance.fecha).toLocaleString()}
               `}
             </td>
             {/* Hora entrada */}
             <td>
               {`
-                ${attendance.horaEntrada.getHours().toString().padStart(2, "0")}:
-                ${attendance.horaEntrada.getMinutes().toString().padStart(2, "0")}:
-                ${attendance.horaEntrada.getSeconds().toString().padStart(2, "0")}
+                ${new Date(attendance.horaEntrada).getHours().toString().padStart(2, "0")}:
+                ${new Date(attendance.horaEntrada).getMinutes().toString().padStart(2, "0")}:
+                ${new Date(attendance.horaEntrada).getSeconds().toString().padStart(2, "0")}
               `}
             </td>
             {/* Hora salida */}
             <td>
               {`
-                ${attendance.horaSalida.getHours().toString().padStart(2, "0")}:
-                ${attendance.horaSalida.getMinutes().toString().padStart(2, "0")}:
-                ${attendance.horaSalida.getSeconds().toString().padStart(2, "0")}
+                ${new Date(attendance.horaSalida).getHours().toString().padStart(2, "0")}:
+                ${new Date(attendance.horaSalida).getMinutes().toString().padStart(2, "0")}:
+                ${new Date(attendance.horaSalida).getSeconds().toString().padStart(2, "0")}
               `}
             </td>
             {/* Atraso */}
             <td>
-              
+              {`
+                ${new Date(attendance.horaSalida)}
+              `}
             </td>
             {/* Horas totales */}
             <td>
-              
+              {`
+                ${(
+                  (new Date(attendance.horaSalida).getTime() - 
+                  new Date(attendance.horaEntrada).getTime()) / 1000 / 60 / 60).toString().padStart(2, "0")}:
+                ${((new Date(attendance.horaSalida).getTime() - new Date(attendance.horaEntrada).getTime()) / 1000 / 60).toString().padStart(2, "0") }
+              `}
             </td>
           </tr>
           ))}
