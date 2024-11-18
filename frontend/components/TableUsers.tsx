@@ -69,7 +69,11 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
       <table className='table is-hoverable is-fullwidth'>
         <thead>
           <tr>
-            <th>Detalles cuenta</th>
+            <th>
+              <button onClick={() => setSwitchTable(1)} className='button is-light' >
+                Volver
+              </button>
+            </th>
             <th>RUT</th>
             <th>Fecha</th>
             <th>Entró</th>
@@ -78,16 +82,11 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </tr>
         </thead>
         <tbody>
-          
           {attendance.filter(
             (attendanceByRut) => attendanceByRut.usuarioRut === refRut.current)
             .map((attendance: Attendance) => (
           <tr key={attendance.id}>
             <th>
-              
-              <button onClick={() => setSwitchTable(1)} className='button is-light' >
-                Volver
-              </button>
             </th>
             {/* RUT */}
             <th>{attendance.usuarioRut}</th>
