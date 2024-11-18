@@ -102,9 +102,26 @@ const loginScheme = v.object(
   }
 );
 
+const pinCheckingScheme = v.object(
+  {
+    rut: v.pipe(
+      v.string(),
+      v.minLength(12),
+      v.maxLength(12),
+    ),
+
+    pin: v.pipe(
+      v.string(),
+      v.minLength(4),
+      v.maxLength(4),
+    )
+  }
+);
+
 
 export const parserUser = v.parser(createUserScheme);
 export const parserLogin = v.parser(loginScheme);
+export const parserPinChecking = v.parser(pinCheckingScheme);
 
 // Custom Types
 export type FormCreateUser = v.InferInput<typeof createUserScheme>;
