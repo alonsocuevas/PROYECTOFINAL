@@ -17,11 +17,12 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
         <div className="column is-8">
           <StrongUserDetails />
         </div>
-        <div className="column is-flex is-justify-content-flex-end">
+        <div className="column is-flex is-justify-content-flex-end mr-6">
           {/* Exportar a CSV */}
           <ExportCSV dataToExport={[{}]}/>
         </div>
       </div>
+        <div className="mr-6">
         <table className='table is-hoverable is-fullwidth'>
           <thead>
             <tr>
@@ -60,6 +61,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             ))}
           </tbody>
         </table>
+        </div>
       </>
     );
   }
@@ -72,12 +74,13 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           <div className="column is-8">
             <StrongUserDetails />
           </div>
-          <div className="column is-flex is-justify-content-flex-end">
+          <div className="column is-flex is-justify-content-flex-end mr-6">
             {/* Exportar a CSV */}
             <ExportCSV dataToExport={[{}]}/>
           </div>
         </div>
 
+        <div className="mr-6">
         <table className='table is-hoverable is-fullwidth'>
           <thead>
             <tr>
@@ -137,6 +140,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             ))}
           </tbody>
         </table>
+        </div>
       </>
     );
   }
