@@ -22,6 +22,6 @@
     "valibot": "^0.42.1"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} ./seed.ts"
+    "seed": "tsx ./seed.ts"
   }
 }

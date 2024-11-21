@@ -1,6 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 const client = new PrismaClient();
+import bcrypt from "bcryptjs";
+
+function getHashedText(textToHash:string) : string{
+    
+  return bcrypt.hashSync(textToHash, createSalt());
+}
+
+function createSalt() : string{
+  return bcrypt.genSaltSync();
+}
+
 
 // Primero se borran todos los registros existentes
 (async () => {
@@ -34,13 +45,13 @@ const client = new PrismaClient();
         "nombres": "María Fernanda",
         "apellidos": "González Silva",
         "correo": "maria.gonzalez@gmail.com",
-        "clave": "password123",
+        "clave": getHashedText("miclave"),
         "area": "Marketing",
         "cargo": "Analista de Marketing Digital",
         "turno": "Tarde",
         "empresa": "InnovaTech SpA",
         "qrCode": "https://innova.tech/qr/18234567-8",
-        "pin": "1234",
+        "pin": getHashedText("1234"),
         "sueldo": 300000,
         rolId: 2,
       }
