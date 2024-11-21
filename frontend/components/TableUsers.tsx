@@ -12,55 +12,61 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
   if(switchTable === 1){
     return (
       <>
-      <div className="columns mt-5">
-        {/* Nombre de trabajador actual */}
-        <div className="column is-8">
-          <StrongUserDetails />
+        <div className="columns mt-5">
+          {/* Nombre de trabajador actual */}
+          <div className="column is-7">
+            <StrongUserDetails />
+          </div>
+          <div className="column is-3 is-flex is-justify-content-flex-end">
+            <div className="buttons">
+              <button onClick={() => setSwitchTable(3)} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => setSwitchTable(4)} className="button is-info is-light">Modificar empleado</button>
+            </div>
+          </div>
+          <div className="column is-flex is-justify-content-flex-end mr-6">
+            {/* Exportar a CSV */}
+            <ExportCSV dataToExport={[{}]}/>
+          </div>
         </div>
-        <div className="column is-flex is-justify-content-flex-end mr-6">
-          {/* Exportar a CSV */}
-          <ExportCSV dataToExport={[{}]}/>
-        </div>
-      </div>
         <div className="mr-6">
-        <table className='table is-hoverable is-fullwidth'>
-          <thead>
-            <tr>
-              <th>Asistencia</th>
-              <th>RUT</th>
-              <th>Nombres</th>
-              <th>Apellidos</th>
-              <th>Correo</th>
-              <th>Área</th>
-              <th>Cargo</th>
-              <th>Turno</th>
-              <th>Empresa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user: User) => (
-            <tr key={user.rut}>
-              <th>
-                
-                <button onClick={() => {
-                  refRut.current = user.rut;
-                  setSwitchTable(2);
-                }} className='button is-light' >
-                  Ver
-                </button>
-              </th>
-              <th>{user.rut}</th>
-              <td>{user.nombres}</td>
-              <td>{user.apellidos}</td>
-              <td>{user.correo}</td>
-              <td>{user.area}</td>
-              <td>{user.cargo}</td>
-              <td>{user.turno}</td>
-              <td>{user.empresa}</td>
-            </tr>
-            ))}
-          </tbody>
-        </table>
+          <table className='table is-hoverable is-fullwidth'>
+            <thead>
+              <tr>
+                <th>Asistencia</th>
+                <th>RUT</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Área</th>
+                <th>Cargo</th>
+                <th>Turno</th>
+                <th>Empresa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user: User) => (
+              <tr key={user.rut}>
+                <th>
+                  
+                  <button onClick={() => {
+                    refRut.current = user.rut;
+                    setSwitchTable(2);
+                  }} className='button is-light' >
+                    Ver
+                  </button>
+                </th>
+                <th>{user.rut}</th>
+                <td>{user.nombres}</td>
+                <td>{user.apellidos}</td>
+                <td>{user.correo}</td>
+                <td>{user.area}</td>
+                <td>{user.cargo}</td>
+                <td>{user.turno}</td>
+                <td>{user.empresa}</td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </>
     );
@@ -71,8 +77,14 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
       <>
         <div className="columns mt-5">
           {/* Nombre de trabajador actual */}
-          <div className="column is-8">
+          <div className="column is-7">
             <StrongUserDetails />
+          </div>
+          <div className="column is-3 is-flex is-justify-content-flex-end">
+            <div className="buttons">
+              <button onClick={() => setSwitchTable(3)} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => setSwitchTable(4)} className="button is-info is-light">Modificar empleado</button>
+            </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
             {/* Exportar a CSV */}
@@ -140,6 +152,141 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             ))}
           </tbody>
         </table>
+        </div>
+      </>
+    );
+  }
+
+  if(switchTable === 3){
+    return (
+      <>
+        <div className="columns mt-5">
+          {/* Nombre de trabajador actual */}
+          <div className="column is-6">
+            <StrongUserDetails />
+          </div>
+          <div className="column is-4 is-flex is-justify-content-flex-end">
+            <div className="buttons">
+              <button onClick={() => {setSwitchTable(3)}} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => {setSwitchTable(4)}} className="button is-info is-light">Modificar empleado</button>
+            </div>
+          </div>
+          <div className="column is-flex is-justify-content-flex-end mr-6">
+            {/* Exportar a CSV */}
+            <ExportCSV dataToExport={[{}]}/>
+          </div>
+        </div>
+
+        <div className="mr-6">
+          <table className='table is-hoverable is-fullwidth'>
+            <thead>
+              <tr>
+                <th>
+                  <button onClick={() => setSwitchTable(1)} className="button is-light">
+                    Volver
+                  </button>
+                </th>
+                <th>RUT</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Área</th>
+                <th>Cargo</th>
+                <th>Turno</th>
+                <th>Empresa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user: User) => (
+              <tr key={user.rut}>
+                <th>
+                  
+                  <button onClick={() => {
+                    refRut.current = user.rut;
+                    // Código para quitar un usuario
+                  }} className='button is-light is-danger' >
+                    Quitar
+                  </button>
+                </th>
+                <th>{user.rut}</th>
+                <td>{user.nombres}</td>
+                <td>{user.apellidos}</td>
+                <td>{user.correo}</td>
+                <td>{user.area}</td>
+                <td>{user.cargo}</td>
+                <td>{user.turno}</td>
+                <td>{user.empresa}</td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    );
+  }
+
+  if(switchTable === 4){
+    return (
+      <>
+        <div className="columns mt-5">
+          {/* Nombre de trabajador actual */}
+          <div className="column is-6">
+            <StrongUserDetails />
+          </div>
+          <div className="column is-4 is-flex is-justify-content-flex-end">
+            <div className="buttons">
+              <button onClick={() => {setSwitchTable(3)}} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => {setSwitchTable(4)}} className="button is-info is-light">Modificar empleado</button>
+            </div>
+          </div>
+          <div className="column is-flex is-justify-content-flex-end mr-6">
+            {/* Exportar a CSV */}
+            <ExportCSV dataToExport={[{}]}/>
+          </div>
+        </div>
+
+        <div className="mr-6">
+          <table className='table is-hoverable is-fullwidth'>
+            <thead>
+              <tr>
+                <th>
+                  <button onClick={() => setSwitchTable(1)} className="button is-light">
+                    Volver
+                  </button>
+                </th>
+                <th>RUT</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Área</th>
+                <th>Cargo</th>
+                <th>Turno</th>
+                <th>Empresa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user: User) => (
+              <tr key={user.rut}>
+                <th>
+                  <button onClick={() => {
+                    refRut.current = user.rut;
+                    // Código para modificar un usuario
+                  }} className='button is-light is-info' >
+                    Modificar
+                  </button>
+                </th>
+                <th>{user.rut}</th>
+                <td>{user.nombres}</td>
+                <td>{user.apellidos}</td>
+                <td>{user.correo}</td>
+                <td>{user.area}</td>
+                <td>{user.cargo}</td>
+                <td>{user.turno}</td>
+                <td>{user.empresa}</td>
+              </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </>
     );
