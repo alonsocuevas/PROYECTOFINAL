@@ -54,20 +54,9 @@ export default async function Page(){
                     </span>
                   </div>
               </div>
-              <div className="column"></div>
             </div>
-            <div className="columns mt-5">
-              <div className="column is-6">
-                {/* Nombre de trabajador actual */}
-                <StrongUserDetails />
-              </div>
-              <div className="column"></div>
-              <div className="column is-1"><SheetIcon width="3rem" height="3rem"/></div>
-            </div>
-
           {/* Tabla de usuarios */}
-          <WrapperTables />
-          
+          <WrapperTables /> 
         </div>
       </div>
     </>
