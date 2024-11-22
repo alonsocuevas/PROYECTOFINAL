@@ -19,7 +19,7 @@ export type Attendance = {
     horaEntrada: Date;
     horaSalida: Date;
     fecha: Date;
-    usuarioRut: String;
+    usuarioRut: string;
 }
 
 export type ChildrenProp<P = unknown> = P & { children: React.ReactNode };
