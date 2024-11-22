@@ -1,9 +1,10 @@
 'use client';
 import { useRef, useState } from "react";
-import { Attendance, User } from "@/app/utils/definitions";
+import { Attendance, ChildrenProp, User } from "@/app/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
 import ExportCSV from "./ExportCSV";
 import { deleteUser } from "@/app/utils/data";
+import WrapperAdminTable from "./WrapperAdminTable";
 
 enum Mode {
   visualization = 1,
@@ -16,7 +17,7 @@ function handleSendUser(){
   
 }
 
-export default function TableUsers({ users, attendance} : {users: User[]; attendance: Attendance[]; }){
+export default function TableUsers({ users, attendance, children} : {users: User[]; attendance: Attendance[]; children: any}){
 
   const [mode, setMode] = useState(1);
   const refRut = useRef("");
@@ -47,7 +48,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
             {/* Exportar a CSV */}
-            <ExportCSV dataToExport={[{}]}/>
+            {children}
           </div>
         </div>
         <div className="mr-6">
@@ -110,7 +111,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
             {/* Exportar a CSV */}
-            <ExportCSV dataToExport={[{}]}/>
+            {children}
           </div>
         </div>
 
@@ -195,7 +196,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
             {/* Exportar a CSV */}
-            <ExportCSV dataToExport={[{}]}/>
+            {children}
           </div>
         </div>
 
@@ -261,7 +262,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
             {/* Exportar a CSV */}
-            <ExportCSV dataToExport={[{}]}/>
+            {children}
           </div>
         </div>
 
