@@ -42,9 +42,9 @@ function createSalt() : string{
     const usuario = await client.usuario.create({
       data: {
         "rut": "12.345.678-9",
-        "nombres": "María Fernanda",
-        "apellidos": "González Silva",
-        "correo": "maria.gonzalez@gmail.com",
+        "nombres": "Admin",
+        "apellidos": "Super",
+        "correo": "admin@gmail.com",
         "clave": getHashedText("miclave"),
         "area": "Marketing",
         "cargo": "Analista de Marketing Digital",
@@ -53,7 +53,7 @@ function createSalt() : string{
         "qrCode": "https://innova.tech/qr/18234567-8",
         "pin": getHashedText("1234"),
         "sueldo": 300000,
-        rolId: 2,
+        rolId: 1,
       }
     });
 
