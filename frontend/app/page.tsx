@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Button from "@/components/Button";
 import Navbar from '@/components/Navbar';
 import home_styles from "./page.module.css";
 import Checking from "@/components/Checking";
@@ -18,17 +17,9 @@ export default function Home() {
     <>
       <div className={home_styles.full_content}>
         <Navbar>
-          <Button
-            onClickEvent={() => setMode('login')}
-            button_style={{
-              title: "Iniciar sesión",
-              color: "#EBEBEB",
-              background: "#333333",
-              height: "4rem",
-              width: "10%",
-            }}
-            type="button"
-          />
+          <button onClick={() => setMode('login')} className="button mr-5 is-outlined" type="button">
+            Iniciar sesión
+          </button>
         </Navbar>
         <main className={home_styles.full_content_main}>
           {mode === 'checking' ? (

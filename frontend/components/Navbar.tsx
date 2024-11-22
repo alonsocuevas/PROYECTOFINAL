@@ -8,7 +8,7 @@ export default function Navbar({children}: ChildrenProp){
   return (
     <div className="navbar has-background-dark">
       <div className="navbar-brand">
-        <a className="navbar-burger burger has-text-white" data-target="navbarMenu" onClick={() => setIsActiveBurger(!isActiveBurger)}>
+        <a className="navbar-burger burger has-text-white mr-4" data-target="navbarMenu" onClick={() => setIsActiveBurger(!isActiveBurger)}>
           <span></span>
           <span></span>
           <span></span>
