@@ -38,9 +38,8 @@ export default function CheckingRegister(){
   }
 
   const handleSuccess = (detectedCodes: IDetectedBarcode[]) => {
-    detectedCodes.map((code) => {
-      fetchUser(getNiceRUT(code.rawValue));
-    });
+    const lastRutDetected = detectedCodes[detectedCodes.length-1].rawValue;
+    fetchUser(getNiceRUT(lastRutDetected));
   };
 
   return <QRScanner width="200px" onScan={handleSuccess}/>;
