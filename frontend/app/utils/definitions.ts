@@ -21,3 +21,5 @@ export type Attendance = {
     fecha: Date;
     usuarioRut: String;
 }
+
+export type ChildrenProp<P = unknown> = P & { children: React.ReactNode };
