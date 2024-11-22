@@ -12,10 +12,24 @@ enum Mode {
   update        = 4
 }
 
+function handleSendUser(){
+  
+}
+
 export default function TableUsers({ users, attendance} : {users: User[]; attendance: Attendance[]; }){
 
   const [mode, setMode] = useState(1);
   const refRut = useRef("");
+  const [editingRows, setEditingRows] = useState(users.map(() => false));
+
+  const handleEditUser = (rowIndex: number) => {
+    // Actualiza el estado de edición solo para la fila correspondiente
+    setEditingRows((prevEditingRows) => {
+      const updatedEditingRows = [...prevEditingRows];
+      updatedEditingRows[rowIndex] = !prevEditingRows[rowIndex];
+      return updatedEditingRows;
+    });
+  };
 
   if(mode === Mode.visualization){
     return (
@@ -271,15 +285,19 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
               </tr>
             </thead>
             <tbody>
-              {users.map((user: User) => (
+              {users.map((user: User, rowIndex) => (
               <tr key={user.rut}>
                 <th>
-                  <button onClick={() => {
-                    refRut.current = user.rut;
-                    // Código para modificar un usuario
-                  }} className='button is-light is-info' >
-                    Modificar
-                  </button>
+                  {editingRows[rowIndex] ? (
+                    <button onClick={() => handleEditUser(rowIndex)} className='button is-light is-success' type="submit">
+                      Guardar
+                    </button>
+                  ) : (
+                    <button onClick={() => handleEditUser(rowIndex)} className='button is-light is-info' >
+                      Modificar
+                    </button>
+                  )}
+                  
                 </th>
                 <th>{user.rut}</th>
                 <td>{user.nombres}</td>
