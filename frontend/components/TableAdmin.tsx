@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Attendance, User } from "@/app/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
 import ExportCSV from "./ExportCSV";
+import { deleteUser } from "@/app/utils/data";
 
 enum Mode {
   visualization = 1,
@@ -26,8 +27,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-3 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => setMode(3)} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => setMode(4)} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => setMode(Mode.remove)} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => setMode(Mode.update)} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -57,7 +58,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
                   
                   <button onClick={() => {
                     refRut.current = user.rut;
-                    setMode(2);
+                    setMode(Mode.attendances);
                   }} className='button is-light' >
                     Ver
                   </button>
@@ -89,8 +90,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-3 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => setMode(3)} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => setMode(4)} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => setMode(Mode.remove)} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => setMode(Mode.update)} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -104,7 +105,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           <thead>
             <tr>
               <th>
-                <button onClick={() => setMode(1)} className='button is-light' >
+                <button onClick={() => setMode(Mode.visualization)} className='button is-light' >
                   Volver
                 </button>
               </th>
@@ -174,8 +175,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-4 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => {setMode(3)}} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => {setMode(4)}} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => {setMode(Mode.remove)}} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => {setMode(Mode.update)}} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -189,7 +190,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             <thead>
               <tr>
                 <th>
-                  <button onClick={() => setMode(1)} className="button is-light">
+                  <button onClick={() => setMode(Mode.visualization)} className="button is-light">
                     Volver
                   </button>
                 </th>
@@ -207,10 +208,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
               {users.map((user: User) => (
               <tr key={user.rut}>
                 <th>
-                  
                   <button onClick={() => {
-                    refRut.current = user.rut;
-                    // Código para quitar un usuario
+                    
                   }} className='button is-light is-danger' >
                     Quitar
                   </button>
@@ -242,8 +241,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-4 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => {setMode(3)}} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => {setMode(4)}} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => {setMode(Mode.remove)}} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => {setMode(Mode.update)}} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -257,7 +256,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             <thead>
               <tr>
                 <th>
-                  <button onClick={() => setMode(1)} className="button is-light">
+                  <button onClick={() => setMode(Mode.visualization)} className="button is-light">
                     Volver
                   </button>
                 </th>
