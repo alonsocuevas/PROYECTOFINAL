@@ -37,3 +37,19 @@ export async function fetchAttendances(){
   }
 
 }
+
+export async function deleteUser(rut: string){
+  try {
+    const response = await fetch(`http://localhost:3000/api/users/${rut}`, {
+      method: "DELETE",
+    });
+
+    return response;
+  }
+
+  catch (err) {
+    console.log('Error de base de datos:', err);
+    throw new Error('Falló al eliminar el usuario');
+  }
+
+}
