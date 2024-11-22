@@ -209,7 +209,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
               <tr key={user.rut}>
                 <th>
                   <button onClick={() => {
-                    
+                    deleteUser(user.rut);
                   }} className='button is-light is-danger' >
                     Quitar
                   </button>
