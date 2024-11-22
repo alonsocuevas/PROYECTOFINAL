@@ -1,22 +1,25 @@
 'use client';
+import { useEffect, useState } from "react";
 
 enum Rol {
     admin = 1,
     user = 2,
 }
 
-const loggedUser = JSON.parse(localStorage.user);
-
 export default function Dashboard({children} : any){
 
-    const dashboard: number = loggedUser.rolId;
+    const [AdminDashboard, UserDashboard] = children;
+    const [rol, setRol] = useState(0);
+    
+    // Este código se ejecutará tras montarse el componente Dashboard...
+    useEffect(() => {
+        const loggedUser = JSON.parse(localStorage.user);
+        if(loggedUser) setRol(loggedUser.rolId);
+    },[]); // ...por primera y única vez ( ,[] )
+    
     // Si el usuario tiene rol de admin muestra el AdminDashboard
-    if(dashboard === Rol.admin){
-        return ( children[0] );
-    }
+    if(rol === Rol.admin) return AdminDashboard;
 
     // Si el usuario tiene rol de user muestra el UserDashboard
-    if(dashboard === Rol.user){
-        return ( children[1] );
-    }
+    if(rol === Rol.user) return UserDashboard;
 }
