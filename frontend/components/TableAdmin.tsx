@@ -4,12 +4,19 @@ import { Attendance, User } from "@/app/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
 import ExportCSV from "./ExportCSV";
 
+enum Mode {
+  visualization = 1,
+  attendances   = 2,
+  remove        = 3,
+  update        = 4
+}
+
 export default function TableUsers({ users, attendance} : {users: User[]; attendance: Attendance[]; }){
 
-  const [switchTable, setSwitchTable] = useState(1);
+  const [mode, setMode] = useState(1);
   const refRut = useRef("");
 
-  if(switchTable === 1){
+  if(mode === Mode.visualization){
     return (
       <>
         <div className="columns mt-5">
@@ -19,8 +26,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-3 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => setSwitchTable(3)} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => setSwitchTable(4)} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => setMode(3)} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => setMode(4)} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -50,7 +57,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
                   
                   <button onClick={() => {
                     refRut.current = user.rut;
-                    setSwitchTable(2);
+                    setMode(2);
                   }} className='button is-light' >
                     Ver
                   </button>
@@ -72,7 +79,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
     );
   }
 
-  if(switchTable === 2){
+  if(mode === Mode.attendances){
     return (
       <>
         <div className="columns mt-5">
@@ -82,8 +89,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-3 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => setSwitchTable(3)} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => setSwitchTable(4)} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => setMode(3)} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => setMode(4)} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -97,7 +104,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           <thead>
             <tr>
               <th>
-                <button onClick={() => setSwitchTable(1)} className='button is-light' >
+                <button onClick={() => setMode(1)} className='button is-light' >
                   Volver
                 </button>
               </th>
@@ -157,7 +164,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
     );
   }
 
-  if(switchTable === 3){
+  if(mode === Mode.remove){
     return (
       <>
         <div className="columns mt-5">
@@ -167,8 +174,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-4 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => {setSwitchTable(3)}} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => {setSwitchTable(4)}} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => {setMode(3)}} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => {setMode(4)}} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -182,7 +189,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             <thead>
               <tr>
                 <th>
-                  <button onClick={() => setSwitchTable(1)} className="button is-light">
+                  <button onClick={() => setMode(1)} className="button is-light">
                     Volver
                   </button>
                 </th>
@@ -225,7 +232,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
     );
   }
 
-  if(switchTable === 4){
+  if(mode === Mode.update){
     return (
       <>
         <div className="columns mt-5">
@@ -235,8 +242,8 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
           </div>
           <div className="column is-4 is-flex is-justify-content-flex-end">
             <div className="buttons">
-              <button onClick={() => {setSwitchTable(3)}} className="button is-danger is-light">Quitar empleado</button>
-              <button onClick={() => {setSwitchTable(4)}} className="button is-info is-light">Modificar empleado</button>
+              <button onClick={() => {setMode(3)}} className="button is-danger is-light">Quitar empleado</button>
+              <button onClick={() => {setMode(4)}} className="button is-info is-light">Modificar empleado</button>
             </div>
           </div>
           <div className="column is-flex is-justify-content-flex-end mr-6">
@@ -250,7 +257,7 @@ export default function TableUsers({ users, attendance} : {users: User[]; attend
             <thead>
               <tr>
                 <th>
-                  <button onClick={() => setSwitchTable(1)} className="button is-light">
+                  <button onClick={() => setMode(1)} className="button is-light">
                     Volver
                   </button>
                 </th>
