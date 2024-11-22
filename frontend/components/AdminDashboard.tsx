@@ -50,7 +50,6 @@ export default function AdminDashboard() {
               </div>
           </div>
             {/* Tabla */}
-            {/* {children} */}
             {<WrapperAdminTable />}
           </div>
       </div>
