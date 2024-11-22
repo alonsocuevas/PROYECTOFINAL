@@ -1,6 +1,5 @@
+import { ChildrenProp } from "@/app/utils/definitions";
 import { useState } from "react";
-
-type ChildrenProp<P = unknown> = P & { children: React.ReactNode };
 
 export default function Navbar({children}: ChildrenProp){
 
