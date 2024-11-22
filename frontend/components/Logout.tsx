@@ -3,9 +3,9 @@ import { useRouter } from "next/navigation";
 
 export default function Logout(){
     const router = useRouter();
-    // const loggedUser = JSON.parse(localStorage.user);
+    
     function handleClick(){
-        delete localStorage.user
+        localStorage.removeItem('user');
         router.push("/");
     }
     
