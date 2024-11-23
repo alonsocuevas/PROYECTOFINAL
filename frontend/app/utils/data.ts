@@ -1,3 +1,5 @@
+import { User } from "./definitions";
+
 export async function fetchUsers(){
   try {
     const data = await (await fetch('http://localhost:3000/api/users', {
@@ -52,4 +54,27 @@ export async function deleteUser(rut: string){
     throw new Error('Falló al eliminar el usuario');
   }
 
+}
+
+export async function updateUser(user: User){
+  try {
+    const { qrCode, ...userThen } = user;
+    const response = await fetch('http://localhost:3000/api/users', {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...userThen,
+        turno: userThen.turno.toLowerCase(),
+      }),
+    });
+
+    return response;
+  }
+
+  catch (err) {
+    console.log('Error de base de datos:', err);
+    throw new Error('Falló al actualizar el usuario');
+  }
 }

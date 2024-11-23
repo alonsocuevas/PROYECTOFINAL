@@ -1,5 +1,5 @@
 export default eventHandler(async (event) => {
-  const rut = getRouterParam(event, "id");
+  const rut = getRouterParam(event, "rut");
 
    if(!await deleteUser(rut)){
     throw createError({

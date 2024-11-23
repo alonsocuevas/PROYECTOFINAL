@@ -6,9 +6,9 @@ enum Rol {
 }
 
 enum Turno {
-  Mañana = 'Mañana',
-  Tarde = 'Tarde',
-  Noche = 'Noche',
+  Mañana = 'mañana',
+  Tarde = 'tarde',
+  Noche = 'noche',
 }
 
 const createUserScheme = v.object(
