@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Attendance, User } from "@/app/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
 import { deleteUser, updateUser } from "@/app/utils/data";
+import Alert from "./alerts/Alert";
 
 enum Mode {
   visualization = 1,
@@ -50,6 +51,8 @@ export default function TableUsers({ users, attendance, children} : {users: User
     const user: User = updatedUsers[rowIndex];
     updateUser(user);
     handleEditUser(rowIndex); // Cierra el modo de edición
+    setNotification("success");
+    setTimeout(() => setNotification("none"), 1500);
   };
 
 
@@ -374,6 +377,16 @@ export default function TableUsers({ users, attendance, children} : {users: User
             </tbody>
           </table>
         </div>
+
+        {/* Notificación de éxito al actualizar un usuario */}
+        {
+          notification === "success" ?(
+            <Alert>
+              <Alert.Success message="Usuario actualizado" />
+            </Alert>
+          ) : null
+        }
+        
       </>
     );
   }
