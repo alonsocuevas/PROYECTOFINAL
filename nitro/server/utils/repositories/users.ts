@@ -48,6 +48,29 @@ export async function deleteUser(rut: string | undefined){
   return true;
 }
 
+export async function updateUser(rut: string | undefined, newUser: FormCreateUser){
+  try {
+    await client.usuario.update({
+      data: newUser,
+      where: {
+        rut: rut
+      }
+    });
+  }
+
+  catch(error){
+    if(error instanceof PrismaClientKnownRequestError){
+      if(error.code === 'P2025'){
+        return false;
+      }
+    }
+
+    throw error;
+  }
+
+  return true;
+}
+
 export async function findUserByEmail(email: string){
   try {
     return await client.usuario.findUniqueOrThrow({

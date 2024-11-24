@@ -1,10 +1,8 @@
 'use client';
 import { useRef, useState } from "react";
-import { Attendance, ChildrenProp, User } from "@/app/utils/definitions";
+import { Attendance, User } from "@/app/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
-import ExportCSV from "./ExportCSV";
-import { deleteUser } from "@/app/utils/data";
-import WrapperAdminTable from "./WrapperAdminTable";
+import { deleteUser, updateUser } from "@/app/utils/data";
 
 enum Mode {
   visualization = 1,
@@ -13,24 +11,47 @@ enum Mode {
   update        = 4
 }
 
-function handleSendUser(){
-  
-}
-
 export default function TableUsers({ users, attendance, children} : {users: User[]; attendance: Attendance[]; children: any}){
 
   const [mode, setMode] = useState(1);
   const refRut = useRef("");
   const [editingRows, setEditingRows] = useState(users.map(() => false));
+  const [updatedUsers, setUpdateUsers] = useState(users.map((user) => ({ ...user })));
+  const [notification, setNotification] = useState("none");
 
   const handleEditUser = (rowIndex: number) => {
-    // Actualiza el estado de edición solo para la fila correspondiente
+    // Le paso un updater function a setEditingRows
+    // prevEditingRows es el valor anterior del estado editingRows
     setEditingRows((prevEditingRows) => {
+      // Creo una copia del estado anterior
       const updatedEditingRows = [...prevEditingRows];
+      // Actualizo la copia
       updatedEditingRows[rowIndex] = !prevEditingRows[rowIndex];
+      // Devuelvo la copia como el nuevo estado
       return updatedEditingRows;
     });
   };
+
+  const handleInputChange = (rowIndex: number, field: string, value:string) => {
+    setUpdateUsers((prevEditValues) => {
+      // Se crea una copia del arreglo prevEditValues
+      const updatedEditValues = [...prevEditValues];
+      // En la posición updatedEditValues[rowIndex]
+      // Se envía un objeto con las nuevas propiedades
+      updatedEditValues[rowIndex] = { 
+        ...updatedEditValues[rowIndex], 
+        [field]: value 
+      };
+      return updatedEditValues;
+    });
+  };
+
+  const handleSaveUser  = (rowIndex: number) => {
+    const user: User = updatedUsers[rowIndex];
+    updateUser(user);
+    handleEditUser(rowIndex); // Cierra el modo de edición
+  };
+
 
   if(mode === Mode.visualization){
     return (
@@ -290,7 +311,7 @@ export default function TableUsers({ users, attendance, children} : {users: User
               <tr key={user.rut}>
                 <th>
                   {editingRows[rowIndex] ? (
-                    <button onClick={() => handleEditUser(rowIndex)} className='button is-light is-success' type="submit">
+                    <button onClick={() => handleSaveUser(rowIndex)} className='button is-light is-success' type="submit">
                       Guardar
                     </button>
                   ) : (
@@ -298,16 +319,56 @@ export default function TableUsers({ users, attendance, children} : {users: User
                       Modificar
                     </button>
                   )}
-                  
                 </th>
-                <th>{user.rut}</th>
-                <td>{user.nombres}</td>
-                <td>{user.apellidos}</td>
-                <td>{user.correo}</td>
-                <td>{user.area}</td>
-                <td>{user.cargo}</td>
-                <td>{user.turno}</td>
-                <td>{user.empresa}</td>
+
+                {editingRows[rowIndex] ? (
+                  <>
+                    <td>
+                      <input className="input" type="text" value={updatedUsers[rowIndex].rut} 
+                      onChange={(e) => handleInputChange(rowIndex, 'rut', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="text" defaultValue={updatedUsers[rowIndex].nombres}
+                      onChange={(e) => handleInputChange(rowIndex, 'nombres', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="text" defaultValue={updatedUsers[rowIndex].apellidos}
+                      onChange={(e) => handleInputChange(rowIndex, 'apellidos', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="email" defaultValue={updatedUsers[rowIndex].correo}
+                      onChange={(e) => handleInputChange(rowIndex, 'correo', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="text" defaultValue={updatedUsers[rowIndex].area}
+                      onChange={(e) => handleInputChange(rowIndex, 'area', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="text" defaultValue={updatedUsers[rowIndex].cargo}
+                      onChange={(e) => handleInputChange(rowIndex, 'cargo', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="text" defaultValue={updatedUsers[rowIndex].turno}
+                      onChange={(e) => handleInputChange(rowIndex, 'turno', e.target.value)}/>
+                    </td>
+                    <td>
+                      <input className="input" type="text" defaultValue={updatedUsers[rowIndex].empresa}
+                      onChange={(e) => handleInputChange(rowIndex, 'empresa', e.target.value)}/>
+                    </td>     
+                  </>             
+                ) : (
+                    <>
+                      <td>{updatedUsers[rowIndex].rut}</td>
+                      <td>{updatedUsers[rowIndex].nombres}</td>
+                      <td>{updatedUsers[rowIndex].apellidos}</td>
+                      <td>{updatedUsers[rowIndex].correo}</td>
+                      <td>{updatedUsers[rowIndex].area}</td>
+                      <td>{updatedUsers[rowIndex].cargo}</td>
+                      <td>{updatedUsers[rowIndex].turno}</td>
+                      <td>{updatedUsers[rowIndex].empresa}</td>
+                    </>
+                  )
+                }
               </tr>
               ))}
             </tbody>
