@@ -155,9 +155,9 @@ export default function CreateUserForm(){
                 <div className="control">
                   <div className="select">
                     <select id="select_turno" name="turno">
-                        <option value="Mañana">Mañana</option>
-                        <option value="Tarde">Tarde</option>
-                        <option value="Noche">Noche</option>
+                        <option value="mañana">Mañana</option>
+                        <option value="tarde">Tarde</option>
+                        <option value="noche">Noche</option>
                     </select>
                   </div>
                 </div>
