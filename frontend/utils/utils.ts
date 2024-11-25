@@ -49,33 +49,22 @@ export function formatRUT(rut: string): any {
  * @returns El RUT en formato 19.999.999-9
  */
 export function getNiceRUT(urlToFindRUT: string){
+  
+  if(urlToFindRUT === ""){
+    throw new EmptyRUTError("El RUT no se encontró");
+  }
 
   try {
     const extractedRUT = extractRUTFromText(urlToFindRUT);
-    if(extractedRUT){
-      try {
-        return formatRUT("19827189-6");
-      }
-
-      catch(error){
-        if(error instanceof EmptyRUTError){
-          console.error(`${error.message}: La cadena de texto está vacía"`);
-        }
-
-        if(error instanceof NoCommonFormatRUTError){
-          console.error(`${error.message}: El RUT no está en el formato correcto"`);
-        }
-      }
-    }
+    return formatRUT(extractedRUT);
   }
 
   catch(error){
-    if(error instanceof EmptyQRCodeError){
-      console.error(`${error.message}: La cadena de texto está vacía"`);
-    }
 
     if(error instanceof NoRUTError){
-      console.error(`${error.message}: La cadena de texto no contiene un RUT"`);
+      throw error;
     }
+
+    console.error(error);
   }
 }
