@@ -1,6 +1,6 @@
 import { IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import QRScanner from "./QRScanner";
-import { getNiceRUT } from "@/utils/utils";
+import { formatRUT, getNiceRUT } from "@/utils/utils";
 
 export default function CheckingRegister(){
   const domain: string = "http://localhost:3000/api";
