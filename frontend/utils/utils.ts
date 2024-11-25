@@ -44,18 +44,21 @@ export function formatRUT(rut: string): any {
 
 /**
  * 
- * @param urlToFindRUT La URL en la que buscar el RUT.
+ * @param textToFindRUT La URL en la que buscar el RUT.
  * Devuelve el RUT encontrado.
  * @returns El RUT en formato 19.999.999-9
+ * @throws {EmptyRUTError} Lanza un error  de tipo EmptyRUTError si el texto no está vacío.
+ * @throws {NoRUTError} Lanza un error de tipo NoRUTError si no se encuentra el RUT en el texto 
+ * con el formato 99999999-9.
  */
-export function getNiceRUT(urlToFindRUT: string){
+export function getNiceRUT(textToFindRUT: string){
   
-  if(urlToFindRUT === ""){
+  if(textToFindRUT === ""){
     throw new EmptyRUTError("El RUT no se encontró");
   }
 
   try {
-    const extractedRUT = extractRUTFromText(urlToFindRUT);
+    const extractedRUT = extractRUTFromText(textToFindRUT);
     return formatRUT(extractedRUT);
   }
 
