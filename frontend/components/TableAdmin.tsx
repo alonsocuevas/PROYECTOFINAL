@@ -1,16 +1,9 @@
 'use client';
 import { useRef, useState } from "react";
-import { Attendance, User } from "@/app/utils/definitions";
+import { Attendance, Mode, Status, User } from "@/app/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
 import { deleteUser, updateUser } from "@/app/utils/data";
 import Alert from "./alerts/Alert";
-
-enum Mode {
-  visualization = 1,
-  attendances   = 2,
-  remove        = 3,
-  update        = 4
-}
 
 export default function TableUsers({ users, attendance, children} : {users: User[]; attendance: Attendance[]; children: any}){
 
@@ -18,7 +11,7 @@ export default function TableUsers({ users, attendance, children} : {users: User
   const refRut = useRef("");
   const [editingRows, setEditingRows] = useState(users.map(() => false));
   const [updatedUsers, setUpdateUsers] = useState(users.map((user) => ({ ...user })));
-  const [notification, setNotification] = useState("none");
+  const [notification, setNotification] = useState<Status>(Status.none);
 
   const handleEditUser = (rowIndex: number) => {
     // Le paso un updater function a setEditingRows
@@ -51,8 +44,8 @@ export default function TableUsers({ users, attendance, children} : {users: User
     const user: User = updatedUsers[rowIndex];
     updateUser(user);
     handleEditUser(rowIndex); // Cierra el modo de edición
-    setNotification("success");
-    setTimeout(() => setNotification("none"), 1500);
+    setNotification(Status.success);
+    setTimeout(() => setNotification(Status.none), 1500);
   };
 
 
@@ -380,7 +373,7 @@ export default function TableUsers({ users, attendance, children} : {users: User
 
         {/* Notificación de éxito al actualizar un usuario */}
         {
-          notification === "success" ?(
+          notification === Status.success ?(
             <Alert>
               <Alert.Success message="Usuario actualizado" />
             </Alert>
