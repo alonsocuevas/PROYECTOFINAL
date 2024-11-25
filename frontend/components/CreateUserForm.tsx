@@ -5,10 +5,12 @@ import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import Alert from './alerts/Alert';
 import { Status } from '@/app/utils/definitions';
+import { useRouter } from 'next/navigation'
 
 export default function CreateUserForm(){
 
   const [notification, setNotification] = useState(Status.none);
+  const router = useRouter();
 
   async function onSubmit(event: FormEvent<HTMLFormElement>){
     event.preventDefault();
@@ -37,7 +39,10 @@ export default function CreateUserForm(){
 
     if(response.ok){
       setNotification(Status.success);
-      setTimeout(() => setNotification(Status.none), 1500);
+      setTimeout(() => {
+        setNotification(Status.none);
+        router.push("/dashboard");
+      }, 1500);
     }
   }
 
