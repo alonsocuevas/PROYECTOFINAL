@@ -1,6 +1,7 @@
 import { IDetectedBarcode } from "@yudiel/react-qr-scanner";
 import QRScanner from "./QRScanner";
 import { formatRUT, getNiceRUT } from "@/utils/utils";
+import { EmptyRUTError, NoRUTError } from "@/utils/errors";
 
 export default function CheckingRegister(){
   const domain: string = "http://localhost:3000/api";
@@ -39,7 +40,25 @@ export default function CheckingRegister(){
 
   const handleSuccess = (detectedCodes: IDetectedBarcode[]) => {
     const lastRutDetected = detectedCodes[detectedCodes.length-1].rawValue;
-    fetchUser(getNiceRUT(lastRutDetected));
+
+    try {
+      fetchUser(getNiceRUT(lastRutDetected));
+    } 
+    
+    catch (error) {
+
+      if(error instanceof EmptyRUTError){
+        console.log("Error: El texto escaneado está vacío");
+      }
+
+      else if(error instanceof NoRUTError){
+        console.log("Error: El texto escaneado no contiene un RUT en el formato 99999999-9");
+      }
+
+      else {
+        console.log(error);
+      }
+    }
   };
 
   return <QRScanner width="200px" onScan={handleSuccess}/>;
