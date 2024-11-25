@@ -17,3 +17,11 @@ Alert.Success = function Success({message} : {message: string}) {
     </div>
   );
 }
+
+Alert.Error = function Error({message} : {message: string}) {
+  return (
+    <div className="notification is-danger is-light has-text-centered">
+      <p>{message}</p>
+    </div>
+  );
+}

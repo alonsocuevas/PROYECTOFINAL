@@ -44,6 +44,13 @@ export default function CreateUserForm(){
         router.push("/dashboard");
       }, 1500);
     }
+
+    if(!response.ok) {
+      setNotification(Status.error);
+      setTimeout(() => {
+        setNotification(Status.none);
+      }, 1500);
+    }
   }
 
 
@@ -200,7 +207,15 @@ export default function CreateUserForm(){
               <Alert.Success message="Usuario creado" />
             </Alert>
           ) : null
-        }
+      }
+
+      {
+        notification === Status.error ? (
+          <Alert>
+            <Alert.Error message="Error al crear usuario" />
+          </Alert>
+        ) : null
+      }
     </>
   );
 }
