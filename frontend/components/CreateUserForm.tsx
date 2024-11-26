@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react';
 import Alert from './alerts/Alert';
 import { Status } from '@/utils/definitions';
 import { useRouter } from 'next/navigation'
+import config from '@/utils/config';
 
 export default function CreateUserForm(){
 
@@ -28,8 +29,8 @@ export default function CreateUserForm(){
 
     // Convertir formdata a JSON
     const body = JSON.stringify(pre_body);
-    
-    const response = await fetch('http://localhost:3000/api/users', {
+    // http://localhost:3000/api/users
+    const response = await fetch(`${config.NITRO_URL}api/users`, {
       method: 'POST',
       body: body,
       headers:{

@@ -2,6 +2,7 @@ import Registration from "./Registration";
 import SeparatorLine from "./SeparatorLine";
 import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import config from "@/utils/config";
 
 export default function Login({onSwitchMode} : any){
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function Login({onSwitchMode} : any){
     const email = formData.get('correo');
     const password = formData.get('contrasena');
 
-    const response = await fetch('http://localhost:3000/api/auth', {
+    const response = await fetch(`${config.NITRO_URL}api/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

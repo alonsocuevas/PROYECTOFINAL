@@ -1,8 +1,9 @@
+import config from "./config";
 import { User } from "./definitions";
 
 export async function fetchUsers(){
   try {
-    const data = await (await fetch('http://localhost:3000/api/users', {
+    const data = await (await fetch(`${config.NITRO_URL}api/users`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +23,7 @@ export async function fetchUsers(){
 
 export async function fetchAttendances(){
   try {
-    const data = await (await fetch('http://localhost:3000/api/attendances', {
+    const data = await (await fetch(`${config.NITRO_URL}api/attendances`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ export async function fetchAttendances(){
 
 export async function deleteUser(rut: string){
   try {
-    const response = await fetch(`http://localhost:3000/api/users/${rut}`, {
+    const response = await fetch(`${config.NITRO_URL}api/users/${rut}`, {
       method: "DELETE",
     });
 
@@ -59,7 +60,7 @@ export async function deleteUser(rut: string){
 export async function updateUser(user: User){
   try {
     const { qrCode, ...userThen } = user;
-    const response = await fetch('http://localhost:3000/api/users', {
+    const response = await fetch(`${config.NITRO_URL}api/users`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Status } from "@/utils/definitions";
 import Alert from "./alerts/Alert";
+import config from "@/utils/config";
 
 export default function PinChecking({onChangeCheckingMode} : any){
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function PinChecking({onChangeCheckingMode} : any){
     // Luego en el server se verifica si el rut existe y si el pin
     // es correcto
     // Si es así, se devuelve en la respuesta el usuario encontrado
-    const response = await fetch('http://localhost:3000/api/attendances/checking', {
+    const response = await fetch(`${config.NITRO_URL}api/attendances/checking`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -32,7 +33,7 @@ export default function PinChecking({onChangeCheckingMode} : any){
     if(response.ok){
       // Si la respuesta es correcta, se realiza la marcación
       // Y se redirige al usuario al home
-      const newResponse = await fetch(`http://localhost:3000/api/attendances`, {
+      const newResponse = await fetch(`${config.NITRO_URL}api/attendances`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
