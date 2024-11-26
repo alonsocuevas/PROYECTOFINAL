@@ -4,7 +4,7 @@ import 'bulma/css/bulma.min.css';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import Alert from './alerts/Alert';
-import { Status } from '@/app/utils/definitions';
+import { Status } from '@/utils/definitions';
 import { useRouter } from 'next/navigation'
 
 export default function CreateUserForm(){

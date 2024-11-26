@@ -23,3 +23,16 @@ export type Attendance = {
 }
 
 export type ChildrenProp<P = unknown> = P & { children: React.ReactNode };
+
+export enum Mode {
+    visualization = 1,
+    attendances   = 2,
+    remove        = 3,
+    update        = 4
+}
+  
+export enum Status {
+    success = "success",
+    error     = "error",
+    none   = "none"
+}

@@ -1,6 +1,6 @@
 'use client';
-import { fetchAttendances } from "@/app/utils/data";
-import { Attendance } from "@/app/utils/definitions";
+import { fetchAttendances } from "@/utils/data";
+import { Attendance } from "@/utils/definitions";
 import { mkConfig, generateCsv, download } from "export-to-csv";
 
 export default function ExportCSV({data} : {data: Attendance[]}){

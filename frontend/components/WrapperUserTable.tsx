@@ -1,5 +1,5 @@
-import { fetchAttendances, fetchUsers } from "@/app/utils/data";
-import { Attendance, User } from "@/app/utils/definitions";
+import { fetchAttendances, fetchUsers } from "@/utils/data";
+import { Attendance, User } from "@/utils/definitions";
 import TableUser from "./TableUser";
 
 export default async function WrapperUserTable(){

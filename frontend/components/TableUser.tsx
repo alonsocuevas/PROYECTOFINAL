@@ -1,5 +1,5 @@
 'use client';
-import { Attendance, User } from "@/app/utils/definitions";
+import { Attendance, User } from "@/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
 
 export default function TableUser({ users, attendance} : {users: User[]; attendance: Attendance[]; }){

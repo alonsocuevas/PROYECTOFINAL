@@ -1,8 +1,8 @@
 'use client';
 import { useRef, useState } from "react";
-import { Attendance, Mode, Status, User } from "@/app/utils/definitions";
+import { Attendance, Mode, Status, User } from "@/utils/definitions";
 import StrongUserDetails from "./StrongUserDetails";
-import { deleteUser, updateUser } from "@/app/utils/data";
+import { deleteUser, updateUser } from "@/utils/data";
 import Alert from "./alerts/Alert";
 
 export default function TableUsers({ users, attendance, children} : {users: User[]; attendance: Attendance[]; children: any}){

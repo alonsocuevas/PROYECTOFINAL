@@ -1,4 +1,4 @@
-import { ChildrenProp } from "@/app/utils/definitions";
+import { ChildrenProp } from "@/utils/definitions";
 import { useState } from "react";
 
 export default function Navbar({children}: ChildrenProp){

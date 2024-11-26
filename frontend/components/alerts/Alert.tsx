@@ -1,4 +1,4 @@
-import { ChildrenProp } from "@/app/utils/definitions";
+import { ChildrenProp } from "@/utils/definitions";
 
 export default function Alert({children} : ChildrenProp){
   return (

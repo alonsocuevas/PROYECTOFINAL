@@ -2,7 +2,7 @@ import Registration from "@/components/Registration";
 import SeparatorLine from "./SeparatorLine";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Status } from "@/app/utils/definitions";
+import { Status } from "@/utils/definitions";
 import Alert from "./alerts/Alert";
 
 export default function PinChecking({onChangeCheckingMode} : any){
