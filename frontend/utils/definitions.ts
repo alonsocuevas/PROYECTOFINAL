@@ -36,3 +36,9 @@ export enum Status {
     error     = "error",
     none   = "none"
 }
+
+export enum CodeStatus {
+    validationError = 400,
+    notFound = 404,
+    invalidCredentials = 401,
+}
