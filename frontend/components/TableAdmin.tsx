@@ -48,6 +48,13 @@ export default function TableUsers({ users, attendance, children} : {users: User
     setTimeout(() => setNotification(Status.none), 1500);
   };
 
+  const handleDeleteUser = (rut: string) => {
+    deleteUser(rut);
+    setNotification(Status.success);
+    setTimeout(() => setNotification(Status.none), 1500);
+    setMode(Mode.remove);
+  }
+
 
   if(mode === Mode.visualization){
     return (
@@ -240,9 +247,8 @@ export default function TableUsers({ users, attendance, children} : {users: User
               {users.map((user: User) => (
               <tr key={user.rut}>
                 <th>
-                  <button onClick={() => {
-                    deleteUser(user.rut);
-                  }} className='button is-light is-danger' >
+                  <button onClick={() => handleDeleteUser(user.rut)
+                  } className='button is-light is-danger' >
                     Quitar
                   </button>
                 </th>
@@ -259,6 +265,15 @@ export default function TableUsers({ users, attendance, children} : {users: User
             </tbody>
           </table>
         </div>
+
+        {/* Notificación de éxito al actualizar un usuario */}
+        {
+          notification === Status.success ?(
+            <Alert>
+              <Alert.Success message="Usuario eliminado" />
+            </Alert>
+          ) : null
+        }
       </>
     );
   }
