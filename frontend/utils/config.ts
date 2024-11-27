@@ -5,8 +5,8 @@ interface Config {
 };
 
 const config: Config = {
-  NITRO_URL: 'http://192.168.1.10/nitro/',
-  NEXT_URL: 'http://192.168.1.10/',
+  NITRO_URL: 'http://localhost:3000/',
+  NEXT_URL: 'http://localhost:3001/',
 };
 
 export default config;
