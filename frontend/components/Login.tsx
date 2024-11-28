@@ -1,11 +1,16 @@
 import Registration from "./Registration";
 import SeparatorLine from "./SeparatorLine";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import config from "@/utils/config";
+import { CodeStatus, Status } from "@/utils/definitions";
+import Alert from "./alerts/Alert";
 
 export default function Login({onSwitchMode} : any){
   const router = useRouter();
-
+  const [notification, setNotification] = useState<Status>(Status.none);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  
   async function handleSubmit(event: FormEvent<HTMLFormElement>){
     event.preventDefault();
 
@@ -14,7 +19,7 @@ export default function Login({onSwitchMode} : any){
     const email = formData.get('correo');
     const password = formData.get('contrasena');
 
-    const response = await fetch('http://localhost:3000/api/auth', {
+    const response = await fetch(`${config.NITRO_URL}api/auth`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,12 +34,32 @@ export default function Login({onSwitchMode} : any){
     }
     
     else {
-      return;
+      if(response.status === CodeStatus.validationError){
+        let message = "";
+        message += "Correo y/o contraseña con formato inválidos.\n";
+        message += "La contraseña debe ser mayor a 4 caracteres";
+        setNotification(Status.error);
+        setErrorMessage(message);
+        setTimeout(() => setNotification(Status.none), 3500);
+      }
+
+      if(response.status === CodeStatus.invalidCredentials){
+        setNotification(Status.error);
+        setErrorMessage("Correo y/o contraseña incorrectas");
+        setTimeout(() => setNotification(Status.none), 1500);
+      }
+
+      if(response.status === CodeStatus.notFound){
+        setNotification(Status.error);
+        setErrorMessage("No se ha podido encontrar tu usuario");
+        setTimeout(() => setNotification(Status.none), 1500);
+      }
     }
+
   }
 
   return (
-    
+    <>
       <Registration title="Ingresar">
         <form onSubmit={handleSubmit}>
           {/* Correo */}
@@ -76,5 +101,11 @@ export default function Login({onSwitchMode} : any){
           </div>
         </form>
       </Registration>
+      {notification === Status.error ? (
+        <Alert>
+          <Alert.Error message={errorMessage}/>
+        </Alert>
+      ) : null}
+    </>
   );
 }

@@ -14,13 +14,16 @@
     "bcryptjs": "2.4.3",
     "bulma": "~1.0.2",
     "export-to-csv": "^1.4.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "~15.0.0",
+    "next-auth": "^4.24.10",
     "react": "18",
     "react-dom": "18"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.14",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "~20",
     "@types/react": "~18",
     "@types/react-dom": "~18",
